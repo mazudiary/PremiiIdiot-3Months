@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/index.css" />
+    <title>Enter Password</title>
+  </head>
+  <body>
+    <div class="password-container">
+      <div class="main-title">Premii & Her Idiot 💖</div>
+      <div class="hint">Hint: Our start of love (dd-mm-yyyy)</div>
+      <div class="sub-title">Enter the Secret Password</div>
+      <div class="password-input-wrapper">
+        <input
+          type="password"
+          id="password"
+          class="password-input"
+          placeholder="Password"
+        />
+        <button
+          class="eye-btn"
+          id="toggleEye"
+          tabindex="-1"
+          aria-label="Show/Hide Password"
+          onclick="togglePassword()"
+        >
+          👁️
+        </button>
+      </div>
+      <button class="submit-btn" onclick="checkPassword()">Unlock</button>
+    </div>
+    <script>
+      function showPopup() {
+        if (document.getElementById("customPopup")) return;
+        const popup = document.createElement("div");
+        popup.className = "custom-popup";
+        popup.id = "customPopup";
+        popup.innerHTML = `
+        <div class="popup-content">
+          <h3>Oops! 💔</h3>
+          <p>That password isn't correct.<br>Try again, my love!<br><span style="font-size:1.5rem;">😭</span></p>
+          <button class="close-btn" onclick="closePopup()">Try Again</button>
+        </div>
+      `;
+        document.body.appendChild(popup);
+        setTimeout(() => {
+          document.querySelector(".close-btn").focus();
+        }, 200);
+      }
+      function closePopup() {
+        const popup = document.getElementById("customPopup");
+        if (popup) popup.remove();
+        document.getElementById("password").focus();
+      }
+      function checkPassword() {
+        const input = document.getElementById("password").value;
+        if (input === "17-06-2025") {
+          window.location.href = "3months.html";
+        } else {
+          showPopup();
+        }
+      }
+      function togglePassword() {
+        const pwd = document.getElementById("password");
+        const eye = document.getElementById("toggleEye");
+        if (pwd.type === "password") {
+          pwd.type = "text";
+          eye.textContent = "🙈";
+        } else {
+          pwd.type = "password";
+          eye.textContent = "👁️";
+        }
+      }
+      document
+        .getElementById("password")
+        .addEventListener("keydown", function (e) {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            checkPassword();
+          }
+        });
+      // Close popup on Escape
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closePopup();
+      });
+    </script>
+  </body>
+</html>
